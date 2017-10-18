@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107400767-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments)};
+	  gtag('js', new Date());
+	  gtag('config', 'UA-107400767-1');
+	</script>
+ 	<meta charset="utf-8">
+ 	<meta name="description" content="FX Synthesizer.">
+	<meta name="keywords" content="sweep,frequency,drum,sample,kick,808,audio,wave,mix,dj">
+	<meta name="author" content="2099">
+	<title>2099 Sweep Synthesizer</title>
+	<link rel="stylesheet" href="lib/bstrap.min.css">
+	<link rel="stylesheet" href="style/wide.css">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+<div id="sample-player" class="sample-player">
+<div class="sample-player-inner">
+	<!-- player -->
+	<div class="wave-spec-show">
+		<div class="wave-spec-container">
+			<div id="wave-spec" class="wave-spec"></div>
+		</div>
+	</div>
+	<p class="sample-caption" id="sample-caption"></p>
+	<div class="player-controls">
+		<div class="volbox">
+			Volume:<br/>
+			<input id="volume" type="range" min="0" max="1" value="1" step="0.1">
+		</div>
+		<div class="player-controls-buttons">
+			<input type="button"
+				value="More steps"
+				class="btn btn-2099"
+				onclick="more_steps();">
+			<input type="button"
+				value="Load in player"
+				class="btn btn-default"
+				onclick="get_samples(true);this.value='Reload'">
+			<input type="button"
+				value="Play"
+				class="btn btn-default"
+				onclick="wave_spec.playPause()">
+			<input type="button"
+				value="Download"
+				class="btn btn-default"
+				onclick="get_samples(false);">
+		</div>		
+	</div>
+	<!--/player -->
+
+	<!-- config -->
+	<div class="panel">
+		<div class="panel-inner">
+			<form id="tr-2099-input">
+				<div class="sweep-steps-container">
+					<ol id="sweep-steps" class="sweep-steps">
+						<li>
+							<label>Start (Hz):<input type="text" name="wave0-start" class="form-control" value="440"></label>
+							<label>End (Hz):<input type="text" name="wave0-end" class="form-control" value="1"></label>
+							<label>Duration (s):<input type="text" name="wave0-time" class="form-control" value="1"></label>
+							<div>
+								<label><input type="radio" name="wave0" value="sine" checked="checked"> Sine</label>
+								<label><input type="radio" name="wave0" value="triangle"> Triangle</label>
+								<label><input type="radio" name="wave0" value="sawtooth"> Sawtooth</label>
+								<label><input type="radio" name="wave0" value="square"> Square</label>
+								<label><input type="radio" name="wave0" value="noise"> Noise</label>
+							</div>
+						</li>
+					</ol>
+					<footer>
+				        <h1>2099 Sweep Synthesizer</h1>
+				        &copy; 2017 Rafael da Silva Rocha.
+				        <br>
+				        <a href="note_frequency_table.html">Note frequencies</a> - 
+				        <a href="about.html">About</a>
+				        <br>
+				        64-bit audio will not play in the browser.<br>
+				    </footer>
+				</div>
+				
+				<div class="sample-options">
+					<label>
+						<input type="radio" name="sequence-sum" value="0" checked="checked"> Sequential steps
+					</label>
+					<label>
+						<input type="radio" name="sequence-sum" value="1"> Sum all steps in one
+					</label>
+					<br>
+					<label class="range">Attack
+						<input type="range" min="0" max="500" value="500" step="1" id="attack">
+					</label>
+					<label class="range">Release
+						<input type="range" min="0" max="500" value="0" step="1" id="release">
+					</label>
+					<label class="range">Dither
+						<input type="range" min="0" max="50" step="1" value="0" id="dither">
+					</label>
+					<label><input type="checkbox" id="use-lpf" onclick="update_lpf_display()">
+					LPF at</label>
+					<input type="text" value="1500" id="lpf-value" class="form-control filter"> Hz
+					<br>
+					<label><input type="radio" name="rectifier" value="0" checked="checked"><strong>No rectification</strong></label>&nbsp;
+					<label><input type="radio" name="rectifier" value="1"><strong>Half-wave rectifier</strong></label>&nbsp;
+					<label><input type="radio" name="rectifier" value="2"><strong>Full-wave rectifier</strong></label>
+					<br>
+					<label><input type="radio" name="bit-depth" id="b64" value="64"> 64</label>
+					<label><input type="radio" name="bit-depth" id="b32f" value="32f"> 32</label>
+					<!-- <label><input type="radio" name="bit-depth" id="b32" value="32"> 32</label> -->
+					<label><input type="radio" name="bit-depth" id="b24" value="24" checked="checked"> 24</label>
+					<label><input type="radio" name="bit-depth" id="b16" value="16"> 16</label>
+					<label><input type="radio" name="bit-depth" id="b8" value="8"> 8 bit</label>
+					<div class="fxonly">
+						Like
+						<label><input type="radio" name="bit-crush" id="d0" value="0" checked="checked"> it is</label>
+						<label><input type="radio" name="bit-crush" id="d5" value="5"> 5</label>
+						<label><input type="radio" name="bit-crush" id="d4" value="4"> 4</label>
+						<label><input type="radio" name="bit-crush" id="d3" value="3"> 3 bit</label>
+					</div>
+					<br>
+					<label><input type="radio" name="sample-rate" id="s8" value="8000"> 8</label>
+					<label><input type="radio" name="sample-rate" id="s16" value="16000"> 16</label>
+					<label><input type="radio" name="sample-rate" id="s441" value="44100"> 44.1</label>
+					<label><input type="radio" name="sample-rate" id="s48" value="48000" checked="checked"> 48</label>
+					<label><input type="radio" name="sample-rate" id="s882" value="88200"> 88.2</label>
+					<label><input type="radio" name="sample-rate" id="s96" value="96000"> 96</label>
+					<label><input type="radio" name="sample-rate" id="s192" value="192000"> 192 kHz</label>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- config -->
+</div>
+</div>
+
+<script src="lib/jquery-3.2.1.slim.min.js"></script>
+<script src="lib/FileSaver.min.js"></script>
+<script src="lib/wavesurfer.min.js"></script>
+<script src="lib/riffwave64.js"></script>
+<script src="src/waveform.js"></script>
+<script src="src/bit.js"></script>
+<script src="src/filters.js"></script>
+<script src="src/tr2099.js"></script>
+<script src="src/tr2099ui.js"></script>
+</body>
+</html>
+<!--
+2099 Sweep Composer
+https://tr2099.github.io/
+See LICENSE for copyright information.
+-->
+

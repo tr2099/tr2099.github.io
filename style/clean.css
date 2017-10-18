@@ -1,0 +1,228 @@
+/* 
+ * 2099 Sweep Composer GUI
+ * https://tr2099.github.io/
+ * See LICENSE for copyright information.
+ *
+ */
+
+body {
+	padding: 0;
+	position: relative;
+	min-width: 780px;
+}
+h1 {
+	margin:  0 0.5em 0 0;
+	display: inline-block;
+}
+h1 a {
+	color: #333;
+}
+h2 {
+	font-size: 1.2em;
+	display: inline-block;
+	margin: 0;
+}
+footer {
+	font-size: 0.9em;
+	padding-top: 10px;
+	margin-top: 20px;
+}
+.source {
+	display: block;
+	font-size: 0.8em;
+}
+
+/*panel*/
+.panel {
+	float: left;
+	width: 450px;
+}
+.panel-inner {
+	padding: 15px 10px 0px 15px;
+}
+.panel p {
+	font-size: 0.9em;
+	margin: 0;
+}
+form {
+	position: relative;
+}
+legend a {
+	font-size: 0.5em;
+}
+.form-control {
+	width: 90px;
+}
+.sweep-steps {
+	margin: 0 0 10px 0;
+	padding: 0 10px 0 0;
+	height: 180px;
+	font-size: 0.9em;
+	overflow-y: auto;
+	background-color: #fbfbfb;
+}
+.sweep-steps li {
+	position: relative;
+	margin: 0;
+	padding: 10px 10px 0 10px;
+	width: auto;
+	list-style-position: inside;
+	
+}
+.remove-step {
+	position: absolute;
+	top: 0;
+	right: 5px;
+	padding: 5px;
+	cursor: pointer;
+	font-size: 0.7em;
+}
+input[type="range"] {
+	width: 100%;
+	margin: 0;
+}
+.range {
+	display: block;
+	margin: 0;
+}
+.sample-options {
+	font-size: 0.7em;
+	margin: 0 0 10px 0;
+	padding: 10px;
+	background-color: #fbfbfb;
+}
+.sample-options-mini {
+	padding: 10px 10px 0 10px;	
+}
+.btn {
+	cursor: pointer;
+}
+.btn:hover {
+	background-color: #ccc;
+}
+.btn-2099 {
+	color: #fff;
+	background-color: #111;
+	position: absolute;
+	right: 0;
+}
+.btn-2099:hover {
+	background-color: #353535;
+}
+.filter {
+	display: inline;
+	font-size: 0.7;
+	width: 45px;
+	height: auto;
+	font-size: 1.3em;
+	padding: 2px 1px;
+	position: relative;
+	top: -1px;
+}
+
+/*player*/
+.sample-player {
+	margin-left: 450px;
+	min-height: 100vh;
+	background-color: #f7f7f7;
+	position: relative;
+}
+.sample-player-inner {
+	padding: 15px 30px;
+}
+.player-header {
+	margin: 0 0 20px 0;
+}
+.sample-player span {
+	display: block;
+}
+.player-text {
+	font-size: 0.9em;
+}
+.sample-player p {
+	margin: 0 0 15px 0;
+}
+.wave-spec-container {
+	background-color: black;
+	margin: 0 0 5px 0;
+	padding: 10px;
+	position: relative;
+}
+.player-controls {
+	margin: 0 0 20px 0;
+}
+.volbox {
+	display: inline-block;
+	position: relative;
+	top: 20px;
+	margin-left: 10px;
+}
+
+/*about*/
+.about {
+	margin: 0 0 20px 0;
+}
+.about p {
+	margin: 0 0 10px 0;
+}
+
+/*note frequencies*/
+.frequency_table {
+	padding: 15px;
+}
+table {
+	border: 1px solid #888;
+	margin: 10px 0;
+	line-height: 125%;
+}
+td, th {
+	padding: 3px;
+	border: 1px solid #888;
+}
+table tr:nth-child(odd) td, table tr:nth-child(odd) th {
+	background-color: #eee;
+}
+table caption {
+	font-size: 0.9em;
+	padding: 0;
+	color: #222;
+}
+.header-top {
+	margin-left: 2em;
+	text-align: right;
+}
+.header-bottom {
+	margin-right: 2em;
+	text-align: left;
+}
+.music-symbol {
+	font-family: Arial Unicode MS, Lucida Sans Unicode;
+}
+.c4 {
+	background-color: #0ff;
+}
+.a4 {
+	background-color: #ff0 !important;
+}
+.sample-caption {
+	font-size: 0.7em;
+	height: 0.7em;
+}
+.cover {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: 0.9;
+	display: none;
+	text-align: center;
+	display: none;
+}
+.cover-inner {
+	font-size: 2em;
+	padding: 20px;
+    margin: auto;
+    color: #fff;
+    text-transform: uppercase;
+}
