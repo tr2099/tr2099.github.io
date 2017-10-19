@@ -28,11 +28,9 @@ class TR2099 {
         this._bitDepth = bitDepth;
         this._attack = attack;
         this._release = release;
-
         if (bitDepth === '4') {
             this._bitDepth = 16;
         }
-
         this._setAmplitude(fx.decimate);
         var sampleSequence = this._getSamples(sequence);
         // FIXME rectification should happen with the other
@@ -52,13 +50,11 @@ class TR2099 {
             this._fixDecimated(sequence.length);
         }
         let rw64 = new RiffWave64();
-
         if (bitDepth === '4') {
             this._bitDepth = 4;
         }else if(bitDepth === '8') {
             this._fix8BitRange();   
         }
-
         let wav = rw64.write(1, this._sampleRate, this._bitDepth, this._samples);
         return "data:audio/wav;base64," + FastBase64.Encode(wav)
     }
