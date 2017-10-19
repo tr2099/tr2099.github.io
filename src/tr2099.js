@@ -52,8 +52,12 @@ class TR2099 {
         let rw64 = new RiffWave64();
         if (bitDepth === '4') {
             this._bitDepth = 4;
-        }else if(bitDepth === '8') {
-            this._fix8BitRange();   
+        } else if(bitDepth === '8') {
+            this._fix8BitRange();
+        } else if(bitDepth == '32f') {
+            this._fix32IEEERange();
+        } else if(bitDepth == '64') {
+            this._fix64BitRange();
         }
         let wav = rw64.write(1, this._sampleRate, this._bitDepth, this._samples);
         return "data:audio/wav;base64," + FastBase64.Encode(wav)
@@ -62,6 +66,18 @@ class TR2099 {
     _fix8BitRange() {
         for(var i=0; i<this._samples.length; i++) {
             this._samples[i] += 127;
+        }
+    }
+
+    _fix32IEEERange() {
+        for(var i=0; i<this._samples.length; i++) {
+            this._samples[i] /= 2147483648;
+        }
+    }
+
+    _fix64BitRange() {
+        for(var i=0; i<this._samples.length; i++) {
+            this._samples[i] /= 9223372036854775808;
         }
     }
 
