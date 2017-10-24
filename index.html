@@ -84,11 +84,19 @@
 				</div>
 				
 				<div class="sample-options">
+					<!--
 					<label>
 						<input type="radio" name="sequence-sum" value="0" checked="checked"> Sequential steps
 					</label>
 					<label>
 						<input type="radio" name="sequence-sum" value="1"> Sum all steps in one
+					</label>
+					-->
+					<label>
+						<input type="radio" name="stereo" value="1"> Stereo
+					</label>
+					<label>
+						<input type="radio" name="stereo" value="0" checked="checked"> Mono
 					</label>
 					<br>
 					<label class="range">Attack
@@ -114,6 +122,7 @@
 					<label><input type="radio" name="bit-depth" id="b24" value="24" checked="checked"> 24</label>
 					<label><input type="radio" name="bit-depth" id="b16" value="16"> 16</label>
 					<label><input type="radio" name="bit-depth" id="b8" value="8"> 8 bit</label>
+					<!--<label><input type="radio" name="bit-depth" id="b4" value="4"> 4 bit ADPCM</label>-->
 					<div class="fxonly">
 						Like
 						<label><input type="radio" name="bit-crush" id="d0" value="0" checked="checked"> it is</label>

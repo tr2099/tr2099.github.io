@@ -56,6 +56,7 @@ function get_samples(player) {
     var lpf = lpf_value();
     var sum = sum_value();
     var decimate = decimate_value();
+    var stereo = stereo_value();
     var this_node_name = '';
     var sequence = [];
     $( "#sweep-steps li" ).each(function( index ) {
@@ -77,7 +78,7 @@ function get_samples(player) {
             "decimate": decimate
         }
         var DataURI = sweeper.sequenceToDataURI(
-            sequence, bitDepth, sampleRate, sum, attack, release, fx);
+            sequence, bitDepth, sampleRate, sum, attack, release, stereo, fx);
         if (player) {
             load_dataURI_in_player(DataURI);
         }else {
@@ -118,6 +119,9 @@ function sum_value() {
 function decimate_value() {
     return parseInt($('input[name=bit-crush]:checked').val());
 }
+function stereo_value() {
+    return parseInt($('input[name=stereo]:checked').val());
+}
 function update_lpf_display() {
     if ($('#use-lpf').is(':checked')) {
         $('#lpf-value').removeAttr('disabled');
@@ -155,7 +159,8 @@ var wave_spec = WaveSurfer.create({
     waveColor: 'fuchsia',
     progressColor: 'orchid',
     backend: 'MediaElement',
-    height: '240'
+    height: '240',
+    splitChannels: true
 });
 
 var volumeInput = document.querySelector('#volume');

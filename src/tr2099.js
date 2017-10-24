@@ -22,14 +22,14 @@ class TR2099 {
         };
     }
 
-    sequenceToDataURI(sequence, bitDepth, sampleRate, sum, attack, release, fx) {
+    sequenceToDataURI(sequence, bitDepth, sampleRate, sum, attack, release, stereo, fx) {
         this._sumSamples = sum;
         this._sampleRate = sampleRate;
         this._bitDepth = bitDepth;
         this._attack = attack;
         this._release = release;
         if (bitDepth === '4') {
-            this._bitDepth = 16;
+            //this._bitDepth = 16;
         }
         this._setAmplitude(fx.decimate);
         var sampleSequence = this._getSamples(sequence);
@@ -49,9 +49,9 @@ class TR2099 {
         if (fx.decimate) {
             this._fixDecimated(sequence.length);
         }
-        let rw64 = new RiffWave64();
+        //let rw64 = new RiffWave64();
         if (bitDepth === '4') {
-            this._bitDepth = 4;
+            //this._bitDepth = 4;
         } else if(bitDepth === '8') {
             this._fix8BitRange();
         } else if(bitDepth == '32f') {
@@ -59,8 +59,17 @@ class TR2099 {
         } else if(bitDepth == '64') {
             this._fix64BitRange();
         }
-        let wav = rw64.write(1, this._sampleRate, this._bitDepth, this._samples);
-        return "data:audio/wav;base64," + FastBase64.Encode(wav)
+        let numChannels = 1;
+        if (stereo) {
+            let stereoSamples = [
+                this._samples,
+                this._samples
+            ];
+            this._samples = interleave(stereoSamples);
+            numChannels = 2;
+        }
+        return writeWavDataURI(
+            numChannels, this._sampleRate, this._bitDepth, this._samples);
     }
 
     _fix8BitRange() {
@@ -244,41 +253,3 @@ class TR2099 {
         return real_amplitude;
     }
 }
-
-var FastBase64 = {
-    chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-    encLookup: [],
-    Init: function() {
-        for (var i=0; i<4096; i++) {
-            this.encLookup[i] = this.chars[i >> 6] + this.chars[i & 0x3F];
-        }
-    },
-    Encode: function(src) {
-        var len = src.length;
-        var dst = "";
-        var i = 0;
-        var n = 0;
-        while (len > 2) {
-            n = (src[i] << 16) | (src[i+1]<<8) | src[i+2];
-            dst+= this.encLookup[n >> 12] + this.encLookup[n & 0xFFF];
-            len-= 3;
-            i+= 3;
-        }
-        if (len > 0) {
-            var n1= (src[i] & 0xFC) >> 2;
-            var n2= (src[i] & 0x03) << 4;
-            if (len > 1) n2 |= (src[++i] & 0xF0) >> 4;
-            dst+= this.chars[n1];
-            dst+= this.chars[n2];
-            if (len == 2) {
-                var n3= (src[i++] & 0x0F) << 2;
-                n3 |= (src[i] & 0xC0) >> 6;
-                dst+= this.chars[n3];
-            }
-            if (len == 1) dst+= "=";
-            dst+= "=";
-        }
-        return dst;
-    }
-};
-FastBase64.Init();
