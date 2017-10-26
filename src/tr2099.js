@@ -28,9 +28,6 @@ class TR2099 {
         this._bitDepth = bitDepth;
         this._attack = attack;
         this._release = release;
-        if (bitDepth === '4') {
-            //this._bitDepth = 16;
-        }
         this._setAmplitude(fx.decimate);
         var sampleSequence = this._getSamples(sequence);
         // FIXME rectification should happen with the other
