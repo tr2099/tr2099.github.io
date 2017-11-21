@@ -5,6 +5,46 @@
  *
  */
 
+
+/**
+ * Interleave multi-channel samples.
+ * @param {!Array<Array<number>>} samples Samples split across channels.
+ */
+function interleave(samples) {
+    let finalSamples = [];
+    let i;
+    let j;
+    let numChannels = samples[0].length;
+    for (i = 0; i < numChannels; i++) {
+        for (j = 0; j < samples.length; j++) {
+            finalSamples.push(samples[j][i]);
+        }
+    }
+    return finalSamples;
+}
+
+/**
+ * De-interleave samples into multiple channels.
+ * @param {!Array<number>} samples Interleaved samples.
+ * @param {number} numChannels The number of channels.
+ */
+function deInterleave(samples, numChannels) {
+    let finalSamples = [];
+    let i;
+    for (i = 0; i < numChannels; i++) {
+        finalSamples[i] = [];
+    }
+    i = 0;
+    let j;
+    while (i < samples.length) {
+        for (j = 0; j < numChannels; j++) {
+            finalSamples[j].push(samples[i+j]);
+        }
+        i += j;
+    }
+    return finalSamples;
+}
+
 class TR2099 {
 
     constructor() {
@@ -65,8 +105,10 @@ class TR2099 {
             this._samples = interleave(stereoSamples);
             numChannels = 2;
         }
-        return writeWavDataURI(
-            numChannels, this._sampleRate, this._bitDepth, this._samples);
+
+        let wav = new WaveFile();
+        wav.fromScratch(numChannels, this._sampleRate, this._bitDepth, this._samples);
+        return "data:audio/wav;base64," + encode(wav.toBytes());
     }
 
     _fix8BitRange() {
