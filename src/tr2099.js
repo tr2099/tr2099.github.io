@@ -108,7 +108,7 @@ class TR2099 {
 
         let wav = new WaveFile();
         wav.fromScratch(numChannels, this._sampleRate, this._bitDepth, this._samples);
-        return "data:audio/wav;base64," + encode(wav.toBytes());
+        return "data:audio/wav;base64," + encode(wav.toBuffer());
     }
 
     _fix8BitRange() {
